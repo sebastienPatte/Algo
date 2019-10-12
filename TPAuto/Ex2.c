@@ -94,6 +94,9 @@ Liste suite(Liste l){
 	return l->suivant ;
 }
 
+
+
+
 void depile(Liste *L){
 	Liste tmp = *L ;
 	*L = suite(*L) ;
@@ -208,6 +211,28 @@ bool AuMoinsKN(int k, int n, Liste l){
 	}
 }
 
+void EliminePositionsImpaires(Liste *l){
+	// &((*l)->suivant);
+	if((NOT estVide(*l)) AND NOT (estVide((*l)->suivant)) ){
+		
+		printf("avant depile\nl:");
+		affiche_rec(*l);
+		printf("suite :");
+		affiche_rec((*l)->suivant);
+		printf("\n");
+
+		depile(&(*l)->suivant);
+		printf("apres depile\nl:");
+		affiche_rec(*l);
+		printf("suite :");
+		affiche_rec((*l)->suivant);
+		printf("\n");
+
+		EliminePositionsImpaires(&((*l)->suivant));
+
+	}
+}
+
 /*************************************************/
 /*                                               */
 /*           Main                                */
@@ -254,7 +279,11 @@ int main(int argc, char** argv){
 	empile(1, &l) ;
 	poup(l) ;
 	printf("AuMoinsKN(4,1) : %s\n\n", AuMoinsKN(5,1,l)?"true":"false");
-
+	
+	printf("EliminePositionsImpaires\n");
+	EliminePositionsImpaires(&l);
+	poup(l) ;
+	
 
 	VideListe(&l);
 	return 0;
