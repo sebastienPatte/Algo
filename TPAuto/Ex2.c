@@ -198,7 +198,15 @@ bool ContientZero(Liste l){
 	}
 }
 
-
+bool AuMoinsKN(int k, int n, Liste l){
+	if(estVide(l)){
+		return FALSE;
+	}else{
+		if(k<=0)return TRUE;
+		if(premier(l)==n) k--;
+		return AuMoinsKN(k,n,suite(l));
+	}
+}
 
 /*************************************************/
 /*                                               */
@@ -240,10 +248,15 @@ int main(int argc, char** argv){
 	printf("ContientZero : %s\n\n", ContientZero(l)?"true":"false");
 	empile(1, &l) ;
 	poup(l) ;
-	printf("ZeroEnDeuxiemePosition : %s\n\n", ZeroEnDeuxiemePosition(l)?"true":"false");
+ 	printf("ZeroEnDeuxiemePosition : %s\n\n", ZeroEnDeuxiemePosition(l)?"true":"false");
+	empile(1, &l) ;
+	empile(1, &l) ;
+	empile(1, &l) ;
+	poup(l) ;
+	printf("AuMoinsKN(4,1) : %s\n\n", AuMoinsKN(5,1,l)?"true":"false");
+
+
 	VideListe(&l);
-
-
 	return 0;
 }
 
