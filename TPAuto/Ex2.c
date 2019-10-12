@@ -28,24 +28,35 @@ typedef Bloc *Liste ;
 /*************************************************/
 /* initialise une Liste à vide */
 void initVide(Liste *L);
+
 /* renvoie 1 si la Liste en parametre est vide, 0 sinon */
 bool estVide(Liste l);
+
 /* renvoie le premier element de la Liste en parametre */
 int premier(Liste l);
-/* renvoie une nouvelle Liste correspondant a celle en parametre, avec l'element x ajoute en haut de la pile */
+
+/* renvoie une nouvelle Liste correspondant a celle en parametre,
+ avec l'element x ajoute en haut de la pile */
 Liste ajoute(int x, Liste l);
+
 /* modifie la Liste en parametre: x est ajoute comme premier element */
 void empile(int x, Liste* L);
-/* renvoie une nouvelle Liste correspondant a celle en parametre sans son premier element */
+
+/* renvoie une nouvelle Liste correspondant a celle en parametre 
+sans son premier element */
 Liste suite(Liste l);
+
 /* modifie la Liste en parametre: le premier element est retire */
 void depile(Liste* l);
+
 /* affichage simple en recursif et en iteratif */
 void affiche_rec(Liste l);
 void affiche_iter(Liste l);
+
 /* longueur en recursif et en iteratif */
 int longueur_rec (Liste l);
 int longueur_iter (Liste l);
+
 /*  Elimination du dernier element en recursif et en iteratif  */
 /*  VD est la sousprocedure utilitaire de la version recursive */
 void VD (Liste *L);
@@ -59,42 +70,51 @@ void VireDernier_iter (Liste *L);
 void initVide( Liste *L){
 	*L = NULL ;
 }
+
 bool estVide(Liste l){
 	return l == NULL ;
 }
+
 int premier(Liste l){
 	return l->nombre ; 
 }
+
 Liste ajoute(int x, Liste l){
 	Liste tmp = (Liste) malloc(sizeof(Bloc)) ;
 	tmp->nombre = x ;
 	tmp->suivant = l ;
 	return tmp ;
 }
+
 void empile(int x, Liste *L){
 	*L = ajoute(x,*L) ; 
 }
+
 Liste suite(Liste l){
 	return l->suivant ;
 }
+
 void depile(Liste *L){
 	Liste tmp = *L ;
 	*L = suite(*L) ;
 	free(tmp) ;
 }
+
 /*************************************************/
 /*                                               */
 /*     Affiche, avec les briques de base         */
 /*                                               */
 /*************************************************/
+
 void affiche_rec(Liste l){
 	if(estVide(l))printf("\n");
 	else{
 		printf("%d ", premier(l));affiche_rec(suite(l));
 	}
 }
+
 void affiche_iter(Liste l){
-	Liste L2 = l;while(!estVide(L2)){
+	Liste L2 = l;while(NOT estVide(L2)){
 	printf("%d ", premier(L2));
 	L2 = suite(L2);}printf("\n");
 }
@@ -107,6 +127,7 @@ int longueur_rec (Liste l){
 	if (l == NULL)return 0 ;
 	else return (1 + longueur_rec(l->suivant)) ;
 }
+
 int longueur_iter (Liste l){
 	Liste P = l;int cpt = 0 ;
 	while (P ISNOT NULL){
@@ -114,6 +135,7 @@ int longueur_iter (Liste l){
 	   cpt++ ;
 	}return cpt ;
 }
+
 /*************************************************/
 /*                                               */
 /*       VireDernier,                            */
@@ -133,6 +155,7 @@ void VireDernier_rec (Liste *L){
 	if ( (*L) ISNOT NULL )
 		VD(L);	// moralement : VD(& (*L)) ;
 }
+
 void VireDernier_iter (Liste *L){
 	if ( (*L) ISNOT NULL){
 		while ( ((**L).suivant) ISNOT NULL )
@@ -146,6 +169,7 @@ void VireDernier_iter (Liste *L){
 /*		 Libere la memoire                       */
 /*                                               */
 /*************************************************/
+
 void VideListe(Liste *L){
 	if(NOT(estVide(*L))){
 		depile(L);
@@ -154,9 +178,34 @@ void VideListe(Liste *L){
 }
 /*************************************************/
 /*                                               */
+/*          	   Questions                     */
+/*                                               */
+/*************************************************/
+
+bool ZeroEnDeuxiemePosition(Liste l){
+	if(estVide(l)){
+		return FALSE;
+	}else{
+		return premier(suite(l)) == 0;
+	}
+}
+
+bool ContientZero(Liste l){
+	if(estVide(l)){
+		return FALSE;
+	}else{
+		return premier(l)==0 AND ContientZero(suite(l));
+	}
+}
+
+
+
+/*************************************************/
+/*                                               */
 /*           Main                                */
 /*                                               */
 /*************************************************/
+
 void poup (Liste l){
 	printf("Double Affichage \n") ;
 	affiche_rec(l) ;
@@ -181,8 +230,20 @@ int main(int argc, char** argv){
 	poup(l) ;
 	VireDernier_rec  (&l) ;
 	VireDernier_iter (&l) ;
-	depile(& l) ;poup(l) ;
+	depile(& l) ;
+	poup(l) ;
+	//tests 
+	printf("ContientZero : %s\n\n", ContientZero(l)?"true":"false");
+	empile(0, &l) ;
+	poup(l) ;
+	printf("ZeroEnDeuxiemePosition : %s\n\n", ZeroEnDeuxiemePosition(l)?"true":"false");
+	printf("ContientZero : %s\n\n", ContientZero(l)?"true":"false");
+	empile(1, &l) ;
+	poup(l) ;
+	printf("ZeroEnDeuxiemePosition : %s\n\n", ZeroEnDeuxiemePosition(l)?"true":"false");
 	VideListe(&l);
+
+
 	return 0;
 }
 
