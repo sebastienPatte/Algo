@@ -290,9 +290,18 @@ int DernierPositif_rec(Liste l){
 		}else{
 			return resSuite;
 		}
-	}
-	
+	}	
 }
+
+int DernierPositif_iter(Liste l){
+	int res = 0;
+	while(NOT estVide(suite(l))){
+		if(premier(l)>0)res=premier(l);
+		l=suite(l);
+	}
+	return res;
+}
+
 
 /*************************************************/
 /*                                               */
@@ -376,8 +385,7 @@ int main(int argc, char** argv){
 	empile(8,&l);	
 	poup(l);
 	printf("DernierPositif_rec(l) = %d\n",DernierPositif_rec(l));
-	poup(l);	
-
+	printf("DernierPositif_iter(l) = %d\n",DernierPositif_iter(l));
 	return 0;
 }
 
