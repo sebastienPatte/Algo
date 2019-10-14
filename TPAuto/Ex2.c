@@ -112,15 +112,20 @@ void depile(Liste *L){
 void affiche_rec(Liste l){
 	if(estVide(l))printf("\n");
 	else{
-		printf("%d ", premier(l));affiche_rec(suite(l));
+		printf("%d ", premier(l));
+		affiche_rec(suite(l));
 	}
 }
 
 void affiche_iter(Liste l){
-	Liste L2 = l;while(NOT estVide(L2)){
-	printf("%d ", premier(L2));
-	L2 = suite(L2);}printf("\n");
+	Liste L2 = l;
+	while(NOT estVide(L2)){
+		printf("%d ", premier(L2));
+		L2 = suite(L2);
+	}
+	printf("\n");
 }
+
 /*************************************************/
 /*                                               */
 /*     Longueur, sans les briques de base        */
@@ -214,23 +219,60 @@ bool AuMoinsKN(int k, int n, Liste l){
 void EliminePositionsImpaires(Liste *l){
 	// &((*l)->suivant);
 	if((NOT estVide(*l)) AND NOT (estVide((*l)->suivant)) ){
-		
-		printf("avant depile\nl:");
-		affiche_rec(*l);
-		printf("suite :");
-		affiche_rec((*l)->suivant);
-		printf("\n");
-
 		depile(&(*l)->suivant);
-		printf("apres depile\nl:");
-		affiche_rec(*l);
-		printf("suite :");
-		affiche_rec((*l)->suivant);
-		printf("\n");
-
 		EliminePositionsImpaires(&((*l)->suivant));
-
 	}
+}
+
+
+
+Liste DifferenceAux(Liste *l1, Liste* l2){
+	if( (NOT estVide(*l1)) AND (NOT estVide(*l2)) ){
+		printf("premier(l1): %d\npremier(l2): %d\n",premier(*l1),premier(*l2));
+		if(premier(*l1)==premier(*l2)){
+			if(estVide((*l2)->suivant)){
+				return DifferenceAux(&((*l1)->suivant),l2);
+			}else{
+				if(estVide((*l1)->suivant)){
+					return DifferenceAux(l1,&((*l2)->suivant));		
+				}else{
+					return DifferenceAux(&((*l1)->suivant),&((*l2)->suivant));		
+				}
+			}
+			
+		
+		}else{
+			if(premier(*l1)>premier(*l2)){
+				if(estVide((*l2)->suivant)){
+					return ajoute(premier(*l2),DifferenceAux(&((*l1)->suivant),l2));
+				}else{
+					return ajoute(premier(*l2),DifferenceAux(l1,&((*l2)->suivant)));
+				}
+			}else{
+				if(premier(*l1)<premier(*l2)){
+					if(estVide((*l1)->suivant)){
+						return ajoute(premier(*l2),DifferenceAux(l1,&((*l2)->suivant)));
+					}else{
+						return ajoute(premier(*l1), DifferenceAux(&((*l1)->suivant),l2));	
+					}
+					
+				}				
+			}
+		}
+
+	}else{
+		Liste lZero ;
+		initVide( &lZero);
+		empile(0,&lZero);
+		return lZero;
+	}
+
+}
+
+Liste Difference(Liste *l1, Liste* l2){
+	Liste l = DifferenceAux(l1,l2);
+	VireDernier_rec(&l);
+	return l;
 }
 
 /*************************************************/
@@ -284,8 +326,29 @@ int main(int argc, char** argv){
 	EliminePositionsImpaires(&l);
 	poup(l) ;
 	
-
 	VideListe(&l);
+
+	Liste l1;
+	Liste l2;
+	initVide(&l1);
+	initVide(&l2);
+
+	empile(5,&l1);
+	empile(4,&l1);
+	empile(3,&l1);
+	empile(1,&l1);
+	
+	empile(8,&l2);
+	empile(5,&l2);
+	empile(4,&l2);
+	empile(2,&l2);
+	
+	
+	printf("Difference([2;3;4;5],[2;4;5;8]) :\n");
+	Liste res=Difference(&l1,&l2);
+	affiche_rec(res);
+	
+
 	return 0;
 }
 
