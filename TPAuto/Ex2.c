@@ -228,7 +228,7 @@ void EliminePositionsImpaires(Liste *l){
 
 Liste DifferenceAux(Liste *l1, Liste* l2){
 	if( (NOT estVide(*l1)) AND (NOT estVide(*l2)) ){
-		printf("premier(l1): %d\npremier(l2): %d\n",premier(*l1),premier(*l2));
+		//printf("premier(l1): %d\npremier(l2): %d\n",premier(*l1),premier(*l2));
 		if(premier(*l1)==premier(*l2)){
 			if(estVide((*l2)->suivant)){
 				return DifferenceAux(&((*l1)->suivant),l2);
@@ -273,6 +273,25 @@ Liste Difference(Liste *l1, Liste* l2){
 	Liste l = DifferenceAux(l1,l2);
 	VireDernier_rec(&l);
 	return l;
+}
+
+int DernierPositif_rec(Liste l){
+	if(estVide(l)){
+		return 0;
+	} else{
+		int resSuite = DernierPositif_rec(suite(l));
+	
+		if(resSuite == 0){
+			if(premier(l)>0){
+				return premier(l);		
+			}else{
+				return 0;
+			} 
+		}else{
+			return resSuite;
+		}
+	}
+	
 }
 
 /*************************************************/
@@ -344,10 +363,20 @@ int main(int argc, char** argv){
 	empile(2,&l2);
 	
 	
-	printf("Difference([2;3;4;5],[2;4;5;8]) :\n");
+	printf("Difference([2;3;4;5],[2;4;5;8]) = ");
 	Liste res=Difference(&l1,&l2);
 	affiche_rec(res);
+	printf("\n");
 	
+	
+	
+	empile(-2,&l);
+	empile(2,&l);
+	empile(-1,&l);
+	empile(8,&l);	
+	poup(l);
+	printf("DernierPositif_rec(l) = %d\n",DernierPositif_rec(l));
+	poup(l);	
 
 	return 0;
 }
