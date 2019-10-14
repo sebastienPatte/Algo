@@ -302,6 +302,21 @@ int DernierPositif_iter(Liste l){
 	return res;
 }
 
+int DernierPositif_aux(Liste l, int res){
+	if(estVide(l)){
+		return res;
+	}else{
+		if(premier(l)>0)res=premier(l);
+
+		return DernierPositif_aux(suite(l),res);
+	}
+}
+
+int DernierPositif_rec_term(Liste l){
+	return DernierPositif_aux(l,0);
+}
+
+
 
 /*************************************************/
 /*                                               */
@@ -386,6 +401,7 @@ int main(int argc, char** argv){
 	poup(l);
 	printf("DernierPositif_rec(l) = %d\n",DernierPositif_rec(l));
 	printf("DernierPositif_iter(l) = %d\n",DernierPositif_iter(l));
+	printf("DernierPositif_rec_term(l) = %d\n",DernierPositif_rec_term(l));
 	return 0;
 }
 
