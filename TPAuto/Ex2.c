@@ -316,6 +316,18 @@ int DernierPositif_rec_term(Liste l){
 	return DernierPositif_aux(l,0);
 }
 
+void AjouteDevantPremierZero(Liste *l, int x){
+	Liste tail= suite(*l);
+	if(estVide(suite(*l))){
+		//mettre x à la fin
+	}else{
+		if(premier(*l)==0){
+			empile(x,l);	
+		}else{
+			AjouteDevantPremierZero(&tail,x);
+		}
+	}
+}
 
 
 /*************************************************/
@@ -369,6 +381,7 @@ int main(int argc, char** argv){
 	EliminePositionsImpaires(&l);
 	poup(l) ;
 	
+
 	VideListe(&l);
 
 	Liste l1;
@@ -396,12 +409,17 @@ int main(int argc, char** argv){
 	
 	empile(-2,&l);
 	empile(2,&l);
+	empile(0,&l);
 	empile(-1,&l);
 	empile(8,&l);	
 	poup(l);
 	printf("DernierPositif_rec(l) = %d\n",DernierPositif_rec(l));
 	printf("DernierPositif_iter(l) = %d\n",DernierPositif_iter(l));
 	printf("DernierPositif_rec_term(l) = %d\n",DernierPositif_rec_term(l));
+	printf("AjouteDevantPremierZero(&l,20) :\n");
+	AjouteDevantPremierZero(&l,20);
+	poup(l);
+
 	return 0;
 }
 
