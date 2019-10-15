@@ -319,9 +319,15 @@ int DernierPositif_rec_term(Liste l){
 void AjouteDevantPremierZero(Liste *l, int x){
 	Liste *tail= &((*l)->suivant);
 	if(estVide(suite(*l))){
-		//mettre x à la fin
+		// on crée une liste ne contenant que x
+		Liste listeX;
+		initVide(&listeX);
+		empile(x,&listeX);
+		//on ajoute listeX à la suite de l
+		(*l)->suivant  = listeX;
 	}else{
 		if(premier(*l)==0){
+			//on ajoute x avant l'elt courant
 			empile(x,l);	
 		}else{
 			AjouteDevantPremierZero(tail,x);
@@ -329,6 +335,9 @@ void AjouteDevantPremierZero(Liste *l, int x){
 	}
 }
 
+void AjouteDevantDernierZero(Liste *l, int x){
+
+}
 
 /*************************************************/
 /*                                               */
@@ -409,7 +418,7 @@ int main(int argc, char** argv){
 	
 	empile(-2,&l);
 	empile(2,&l);
-	empile(0,&l);
+	
 	empile(-1,&l);
 	empile(8,&l);	
 	poup(l);
