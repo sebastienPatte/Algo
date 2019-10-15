@@ -318,13 +318,13 @@ int DernierPositif_rec_term(Liste l){
 
 void AjouteDevantPremierZero(Liste *l, int x){
 	Liste *tail= &((*l)->suivant);
-	if(estVide(suite(*l))){
+	if(estVide(suite(*l)) && (premier(*l) ISNOT 0) ){
 		// on crée une liste ne contenant que x
 		Liste listeX;
 		initVide(&listeX);
 		empile(x,&listeX);
 		//on ajoute listeX à la suite de l
-		(*l)->suivant  = listeX;
+		*tail  = listeX;
 	}else{
 		if(premier(*l)==0){
 			//on ajoute x avant l'elt courant
@@ -335,8 +335,34 @@ void AjouteDevantPremierZero(Liste *l, int x){
 	}
 }
 
-void AjouteDevantDernierZero(Liste *l, int x){
+void AjouteDevantDernierZeroAux(Liste *l,int x, Liste *lRes){
+	if(estVide(suite(*l))){
+		if(premier(*l)==0){
+			empile(x,l);
+		}else{
+			if(estVide(*lRes)){
+				// on crée une liste ne contenant que x
+				Liste listeX;
+				initVide(&listeX);
+				empile(x,&listeX);
+				//on ajoute listeX à la suite de l
+				(*l)->suivant  = listeX;
+			}else{
+				empile(x,lRes);
+			}
+		}
+	}else{
+		//si la suite n'est pas vide
+		if(premier(*l)==0)lRes=l;
 
+		AjouteDevantDernierZeroAux(&((*l)->suivant), x, lRes);
+	}
+}
+
+void AjouteDevantDernierZero(Liste *l, int x){
+	Liste lVide;
+	initVide(&lVide);
+	AjouteDevantDernierZeroAux(l, x, &lVide);
 }
 
 /*************************************************/
@@ -418,8 +444,9 @@ int main(int argc, char** argv){
 	
 	empile(-2,&l);
 	empile(2,&l);
-	
+	empile(0,&l);
 	empile(-1,&l);
+	empile(0,&l);
 	empile(8,&l);	
 	poup(l);
 	printf("DernierPositif_rec(l) = %d\n",DernierPositif_rec(l));
@@ -427,6 +454,9 @@ int main(int argc, char** argv){
 	printf("DernierPositif_rec_term(l) = %d\n",DernierPositif_rec_term(l));
 	printf("AjouteDevantPremierZero(&l,20) :\n");
 	AjouteDevantPremierZero(&l,20);
+	poup(l);
+	printf("AjouteDevantDernierZero(&l,20) :\n");
+	AjouteDevantDernierZero(&l,20);
 	poup(l);
 
 	return 0;
