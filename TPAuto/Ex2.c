@@ -317,14 +317,14 @@ int DernierPositif_rec_term(Liste l){
 }
 
 void AjouteDevantPremierZero(Liste *l, int x){
-	Liste tail= suite(*l);
+	Liste *tail= &((*l)->suivant);
 	if(estVide(suite(*l))){
 		//mettre x à la fin
 	}else{
 		if(premier(*l)==0){
 			empile(x,l);	
 		}else{
-			AjouteDevantPremierZero(&tail,x);
+			AjouteDevantPremierZero(tail,x);
 		}
 	}
 }
