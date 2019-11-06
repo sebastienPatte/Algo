@@ -1,4 +1,5 @@
 
+
 8/
 procedure EPO(x, inout L)
 	si(not EstVide(L))
@@ -141,8 +142,20 @@ procedure Pmirroir_aux(inout L, inout L2)
 		L2 <- L
 		L <- tmp
 		Pmiroir_aux(L,L2)
+16/
+fonction concatene(L1,L2) : liste
+	si estVide(L1) alors rendre L2
+	sinon si estVide(L2) alors rendre L1
+		  sinon rendre ajoute(premier(L1),concatene(suite(L1),L2))
+
+fonction AETTL (x, LL : liste de liste d'entiers)
+	si estVide(LL) alors rendre []
+	sinon rendre ajoute (ajoute(x,premier(LL)),AETTL(x,suite(LL)))
 
 fonction listeinterclassements (L1, L2) : liste de liste
 	si EstVide(L1) alors rendre [L2]
 	sinon si estVide(L2) alors rendre [L1]
 	sinon rendre
+			concatene(AETTL (premier(L1), listeinterclassements(suite(L1),L2), AETTL(premier(L2), listeinterclassements(L1, suite(L2l)))))
+
+
