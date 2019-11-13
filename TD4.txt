@@ -1,0 +1,56 @@
+(n(n+1)) / 2 :
+	~ (n^2)/2
+	θ n^2
+	O 
+échange val de A et B:
+A <- B-A
+B <- B-A
+A <- A+B
+
+
+Ex2:
+	1/ photo
+	2/  O(2n) θ(proba de 2/k qu'on fasse deux tests pour t[k]
+		complexite moyenne : 2*2k + 1*(1-(2/k))	= 1+(2/k)
+		complexité moyenne = k+2ln(k) + O(1)
+
+		Diviser pour régner:
+			-couper le tableau en deux parties G et D
+			-chercher min et max de G et D
+			-min_tab(T) = min(min_tab(G),min_tab(D))
+			
+			On s'arrete de découper les tableau quand ils contiennent 2 éléments.
+			À la fin on a n/2 tab de 2 elt, on doit faire une comparaison pour chaqun de ces tab pour trouver le min et le max.
+			On fait n/2 comparaisons pour trouver les min/max de chacque tab puis (n/2)-1 pour trouver le min des min et (n/2)-1 pour le max des max.
+			Donc la complexite en comparaison est 3n/2.
+
+			Si on découpe en tab de 3 elt, on en a n/3.
+			il nous faut 3 comparaisons pour chaque tab donc 3n/3
+			complexité = n + nb matchs max + nb matchs min
+					   = n + (n/3 - 1) + (n/3 - 1) = n+ 2n/3 - 2 = 5n/3 -2
+					   ~ 5n/3 + O(1)
+	3/ 
+
+Ex4:
+	complexité au pire en nb de comparaison de réels (éléments du tab): longueur
+		pour améliorer la complexité on peut faire de la dichotomie (complexité : θ(log[2] n)
+	complexité au pire en nb d'affectation de réels (éléments du tab): 3*longueur
+		déplacer les elts qui doivent l'être vers la droite et on fait pas d'échange. (complexité : longueur+O(1))
+
+Ex5:
+	1/
+		coût au pire de empile : 2M allocations + M copies = 3M : 3M est ammortie par les M opérations qui ont un coût très faible donc la 																complexité est constante.
+
+	2/
+		procédure décale (inout T[], i, j, k) : 
+			si k>0
+			alors :
+				pour cpt allant de j à i:
+					T[cpt+k] <- T[cpt]
+				pour cpt allant de i à i+k-1:
+					T[cpt] <- 0
+			sinon :
+				pour cpt allant de i à j:
+					T[cpt+k] <- T[cpt]
+				pour cpt allant de j+k+1 à j:
+					T[cpt] <- 0
