@@ -6,7 +6,7 @@
 A <- B-A
 B <- B-A
 A <- A+B
-
+			
 
 Ex2:
 	1/ photo
@@ -54,3 +54,75 @@ Ex5:
 					T[cpt+k] <- T[cpt]
 				pour cpt allant de j+k+1 à j:
 					T[cpt] <- 0
+	3/
+		un mot est un carré s'il existe u non vide, v et w potentiellement vides, tels que :
+			m = v uu w
+		
+		fonction sansCarre(tableau T[1...N]) : boolean 
+			sansCarre <- vrai
+			/*existe il un facteur commencant par deb+1 ?*/
+			pour deb allant de 0 à n-2:  // ok n-1 ou n
+				/*est ce qu'il existe un facteur commençant par deb +1 de taille tf ?*/
+				pour tf allant de 1 à (n-deb)/2 :
+					carre <- vrai
+
+					pour i de 1 à tf :
+						si T[deb+i] != T[deb+i+tf]
+						alors carre <- faux
+						break
+					si carre alors retourner faux
+			retourner vrai
+
+	4/
+		procedure fusion(tableau t1[1...n1], tableau t2[1...n2], tableau res[1...n1+n2] )
+			cpt1 <- 1
+			cpt2 <- 1
+			cptRes <- 1
+
+			tant que cpt1 <= n1 ET cpt2 <= n2:
+				
+				si cpt1 <= n1 ET t1[cpt1] < t2[cpt2]
+				alors 
+					res[cptRes] = t1[cpt1]
+					cpt1 <- cpt1 + 1
+					
+				
+				sinon 
+					res[cptRes] = t2[cpt2]
+					cpt1 <- cpt1 + 1
+
+				cptRes <- cptRes + 1
+
+			tant que cpt1 <= n1 : res[cptRes] = n1[cpt1]; cpt1++; cptRes++;
+			tant que cpt2 <= n2 : res[cptRes] = n2[cpt2]; cpt2++; cptRes++;
+		
+		procedure fusion(tableau t1[1...n1], tableau t2[1...n2], tableau res[1...n1+n2] )
+			cpt1 <- 1
+			cpt2 <- 1
+			cptRes <- 1
+
+			pour cptRes allant de 1 à n1+n2
+				si cpt1 > n1 
+				alors res[cptRes] <- t2[cpt2]; cpt2++;
+				sinon si t2 > n2 
+				 	  alors res[cptRes] = t1[cpt1]; cpt1++:
+
+	5/
+		fonction trieCartes ()
+			pour i allant de 1 à N :
+				U[i] <- T[i]	
+			pour i allant de 1 à N :
+				T[num(U[i])] <- U[i] 
+
+		fonction trieCartes ()
+			pour i allant de 1 à N :
+				si num(T[i]) != i
+					échanger T[i] et T[num(i)]
+
+
+	6/
+		algo naif : comparer toutes les paires d'élements : complexité = θ(n2/2)
+
+		on trie le tableau avant puis on a juste a parcourir le tableau et vérifier que deux elts qui se suivent ne sont pas les mêmes : complexité =n log(n)
+
+		
