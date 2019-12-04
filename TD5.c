@@ -76,7 +76,7 @@ int compteSansAsc (Arbre A){
 }
 
 int compteSansDesc (Arbre A){
-	if(estFeuille){
+	if(estFeuille(A)){
 		return 0;
 	}else{
 		int cpt = compteSansDesc(SAG(A)) + compteSansDesc(SAD(A));
@@ -90,22 +90,81 @@ int compteSansDesc (Arbre A){
 				return 0;
 			}
 		}
-		
-		return cpt;
 	}
 }
 
-int compteHEgalP (Arbre A){
-	if(estFeuille){
+//Q7
+int compteHP (Arbre A){
+	int cpt =0;
+	Bis(A,0,h,cpt);
+	return cpt;
+}
+
+void Bis(Arb<re A, int p, int out h, int inout cpt){
+	if(estFeuille(A)){
+		h = 0
+	}else{
+		Bis(SAG(A),p+1,hg,cpt);
+		Bis(SAD(A),p+1,hd,cpt);
+		h = 1+max(hg,hd);
+		if(h==p)cpt++;
+	}
+}
+
+//Q8
+bool estComplet(Arbre A){
+	return (pFeuille(A,0) != -1);
+}
+
+int hFeuille(Arbre A){
+	if(estFeuille(A)){
 		return 0;
 	}else{
+		int hg = hFeuille(SAG(A)); 
+		int hd = hFeuille(SAD(A));
+		if(hg == hd && hg!=-1){
+			return hg+1;
+		}else{
+			return -1;
+		}
+	}
+}
+//Correction
+bool estComplet(Arbre A){
+	estComplet_aux(A,b,h);
+	return b;
+}
 
+void estComplet_aux(Arbre A, bool out b, int out h){
+	si estFeuille(A){
+		b = true;
+		h=0;
+	}else{
+		estComplet_aux(SAG,bg,hg);
+		estComplet_aux(SAG,bd,hd);
+		b = bg && bd && (hg == hd);
+		h = max(hg,hd) +1;
 	}
 }
 
+//Ex2
+//prefixe : racine avant
+void affichagePrefixe(Arbre A){
+	pile = [];
+	empiler(A,pile);
+	while(!estVide(pile)){
+		X = premier(pile);
+		depile(pile);
+		if(estFeuille(X)){
+			printf("%d",valeurFeuille(X));
+		}else{
+			printf("%d",valeurRacine(X));
+			empile(SAD(X),pile);
+			empile(SAG(X),pile);
+		}
+	}
+}
+//suffixe : racine après
+12+3*45*67-8/+9-/
 
-
-
-
-
-
+/+-1+23+4-+/567+89
