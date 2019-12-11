@@ -168,3 +168,47 @@ void affichagePrefixe(Arbre A){
 12+3*45*67-8/+9-/
 
 /+-1+23+4-+/567+89
+/*
+Algo de prefixe a suffixe  :
+Pour chaque nouveau caractère (nombre ou symbole)
+On le place au niveau de la feuille vide qu'on rencontre en parcours préfixe
+Cas 1 : si c'est un symbole : on remplace la feuille par un noeud interne avec FG et FD
+Cas 2 : si c'est un nombre : on ranjoute simplement la valeur dans la feuille
+*/
+
+bool estDans(Arbre a, int x){
+	if(estFeuille){
+		return false;
+	}else{
+		if(valeurRacine(a) == x){
+			return true;
+		}else{
+			if(x < valeurRacine(a)){
+				return estDans(SAG(a),x);
+			}else{
+				return estDans(SAD(a),x);
+			}
+		}
+	}
+}
+
+void ajout(int x, inout Arbre a ){
+	if(estFeuille(a)){
+		a = construire(x,feuille,feuille);
+	}else{
+		if(valeurRacine(a) < x){
+			ajout(pointeurSAD(a));
+		}else{
+			ajout(pointeurSAG(a))
+		}
+	}
+}
+
+
+
+
+
+
+
+
+

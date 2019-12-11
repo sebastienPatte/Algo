@@ -132,7 +132,10 @@ fonction ComptageApparitions(in T1[1...n1], in T2[1...n2]) : int
 				  Alors flag <- faux
 				  Sinon flag <- T1[i] = T2[j+i]
 			i++
-		
+
+//Ex3
+//2
+	[1; 2; 9; 3; 4; 10; 12; 7; 5; 6; 8; 11]	
 
 
 

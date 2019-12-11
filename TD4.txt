@@ -125,4 +125,83 @@ Ex5:
 
 		on trie le tableau avant puis on a juste a parcourir le tableau et vérifier que deux elts qui se suivent ne sont pas les mêmes : complexité =n log(n)
 
-		
+	7/
+Ex7:
+	1/
+	procedure quickSort (inout T: tableau, in n: entier)
+		quick(T,1,n)
+
+	procedure quick (inout T ; tableau, in deb : entier, in fin : entier)
+		si fin > deb
+		alors 
+			separe(T, deb, fin, piv)
+			quick(T, deb, piv-1)
+			quick(T, piv+1, fin)
+
+
+	fonction quickSortChercheElementKemePosition (in T: tableau, in n: entier)
+		rendre quick(T,1,n)
+
+	fonction quick (in T ; tableau, in deb : entier, in fin : entier, in k: entier)
+		separe(T, deb, fin, piv)
+		si piv = k
+		alors rendre T[piv]
+		sinon
+			si piv < k
+			alors rendre quick(T, piv+1, fin)
+			sinon rendre quick(T, deb, piv-1)
+
+
+
+les tas :
+	un tas est un arbre tel que tout noeud est inférieur à tout ses descendants (gauche et droite)
+	un tas est presque complet et le dernier étage se remplit de gauche à droite
+	on peut le représenter sour forme de tableau [4;6;5;7;8;9] en lisant l'arbre de haut en bas et de gauche à droite 
+
+	ou un elt en pos i, son fils gauche est en pos 2i (si 2i < n) et son fils droit en pos 2i+1 (si 2i+1 < n)
+	
+	vérifier qu'un tableau est un tas :
+
+	fonction estTas(in T: tableau[1..n] d'entiers ) : booléen
+		pour i de 1 à (n-1)/2
+			si T[i] > T[2i] ou T[i] > T[2i+1]
+			alors rendre faux
+		si T[n/2] > T[n] /*si n impair on n'a pas encore vérié cette paire*/
+		alors rendre faux
+		rendre vrai
+
+	fonction estTas(in T: tableau[1..n] d'entiers ) : booléen		
+		rendre estTasAux(T,1,n)
+
+	fonction estTasAux (in T: tableau[1..n] d'entiers, in i : entier, in n : entier) : booléen
+		si 2i > n
+		alors rendre vrai
+		sinon 
+			si 2i = n
+			alors rendre T[i] <= T[2i]
+			sinon rendre T[i] <= T[2i] et estTasAux(T,2i,n) et T[i] <= T[2i+1] et estTasAux(T, 2i+1, n)
+
+
+
+	fonction estTasAux (in T: tableau[1..n] d'entiers, in i : entier, in n : entier) : booléen
+		pour i allant de 2 à 2
+			si T[i div 2] > T[i]
+			alors rendre faux
+			rendre vrai
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
